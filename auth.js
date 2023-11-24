@@ -87,7 +87,9 @@ async function clearSessions() {
       expired.push(session.id);
     }
   }
-  knex("sessions").whereIn("id", expired).delete();
+  if (expired.length) {
+    await knex("sessions").whereIn("id", expired).delete();
+  }
 }
 
 module.exports = {
