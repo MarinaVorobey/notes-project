@@ -6,8 +6,9 @@
   "keywords": [],
   "main": "index.js",
   "scripts": {
-    "start": "npm run db:migrate && npm run build && node index.js -e js,njk",
+    "start": "npm run db:migrate && npm run install:browsers && npm run build && node index.js -e js,njk",
     "dev": "npm run db:migrate && npm run build && nodemon index.js -e js,njk",
+    "install:browsers": "npx @puppeteer/browsers install chrome@stable",
     "db:migrate": "knex migrate:latest",
     "add:notes": "knex seed:run",
     "test": "echo \"Tests passed\" && exit 0",
