@@ -174,6 +174,7 @@ app.get("/dashboard/note/:id/download_pdf", auth(), async (req, res) => {
   async function printPDF() {
     const browser = await puppeteer.launch({ headless: "new" });
     const page = await browser.newPage();
+
     await page.setContent(`
     <html>
         <head>
