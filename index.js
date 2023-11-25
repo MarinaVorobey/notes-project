@@ -41,7 +41,9 @@ app.get("/", auth(), (req, res) => {
         ? req.query.authError
         : req.query.userOverwrite === "true"
           ? "Пользователь с таким именем уже существует"
-          : "Неверное имя пользователя или пароль"
+          : req.query.emptyValue === "true"
+            ? "Введите имя пользователя и пароль"
+            : "Неверное имя пользователя или пароль"
   });
 });
 
@@ -65,6 +67,9 @@ app.post("/login", express.urlencoded({ extended: false }), async (req, res) => 
 
 app.post("/signup", express.urlencoded({ extended: false }), async (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) {
+    return res.redirect("/?authError=true&emptyValue=true");
+  }
   const user = await findUserByUsername(username);
   if (user) {
     return res.redirect("/?authError=true&userOverwrite=true");
