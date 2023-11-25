@@ -67,7 +67,7 @@ app.post("/login", express.urlencoded({ extended: false }), async (req, res) => 
 
 app.post("/signup", express.urlencoded({ extended: false }), async (req, res) => {
   const { username, password } = req.body;
-  if (!username || !password) {
+  if (!username.length || !password.length) {
     return res.redirect("/?authError=true&emptyValue=true");
   }
   const user = await findUserByUsername(username);
